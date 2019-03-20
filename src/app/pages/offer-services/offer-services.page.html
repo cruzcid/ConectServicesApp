@@ -1,0 +1,54 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Ofrecer Servicios</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>
+                Nuevo Servicio
+            </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-label position="stacked">Tipo</ion-label>
+                <ion-select placeholder="Servicios" [(ngModel)]="servicio.type">
+                    <ion-select-option *ngFor="let sType of servicioTypes" [value]="sType.name">{{ sType.name }}</ion-select-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>Servicio a Domicilio:</ion-label>
+                <ion-toggle color="primary" [(ngModel)]="servicio.home_delivery"></ion-toggle>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Direccion</ion-label>
+                <ion-input [(ngModel)]="servicio.address" type="string"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Precio</ion-label>
+                <ion-input [(ngModel)]="servicio.price" type="number"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Descripcion</ion-label>
+                <ion-input [(ngModel)]="servicio.product_description" type="text"></ion-input>
+            </ion-item>
+            <ion-row no-padding>
+                <ion-col size="6">
+                    <ion-button expand="full" color="danger" (click)="onCancel()">
+                        <ion-icon name="close" slot="icon-only"></ion-icon>
+                    </ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button expand="full" color="success" (click)="addTransaction()">
+                        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+    </ion-card>
+</ion-content>
