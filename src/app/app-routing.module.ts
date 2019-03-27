@@ -6,11 +6,13 @@ const routes: Routes = [
     { path: 'intro', loadChildren: './pages/intro/intro.module#IntroPageModule' },
     {
         path: 'menu',
-        canActivate: [IntroGuard], 
+        canActivate: [IntroGuard],
         loadChildren: './pages/menu/menu.module#MenuPageModule'
     },
-    { path: '', redirectTo: 'menu/my-profile', pathMatch: 'full' },
-  
+    {   path: '', redirectTo: 'menu/my-profile', pathMatch: 'full' },
+    {   path: 'confirm-servicio-modal', 
+        loadChildren: './pages/confirm-servicio-modal/confirm-servicio-modal.module#ConfirmServicioModalPageModule' 
+    }
 ];
 
 @NgModule({

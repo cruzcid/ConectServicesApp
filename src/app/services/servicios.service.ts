@@ -19,7 +19,8 @@ export interface Servicio {
     price: number,
     product_description: string,
     created_at: number,
-    enterpriseId: number
+    enterpriseId: number,
+    availability: number
 }
 @Injectable({
     providedIn: 'root'
