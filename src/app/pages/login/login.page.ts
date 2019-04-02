@@ -1,15 +1,47 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import { Storage } from '@ionic/storage';
+
+const AUTENTICATION_KEY:string = 'is-autenticated';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+    selector: 'app-login',
+    templateUrl: './login.page.html',
+    styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+    private username: string;
+    private password: string;
+    constructor(
+        private router: Router,
+        private userService: UserService,
+        private storage:Storage) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
 
+    }
+
+    public attemptLoggin(mForm) {
+        console.log("Sadhguru ");
+        console.log(mForm.form.value);
+        let value = mForm.form.value;
+        this.userService.getUser(value.username)
+            .then((user) => {
+                console.log("userResponse positive");
+                console.log(user);
+                if(value.username === user.username && value.password === user.password){ 
+                    this.storage.set(AUTENTICATION_KEY, true);
+                    this.router.navigateByUrl('/menu/my-profile')
+                }
+            })
+            .catch((user) => {
+                console.log("userResponse negative");
+                console.log(user);
+            });
+    }
+    public login(mForm): void {
+        console.log(mForm);
+    }
 }
