@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanActivate, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+
+const AUTENTICATION_KEY:string = 'is-autenticated'
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +17,7 @@ export class LoginRegisterGuard implements CanActivate {
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ): Promise<boolean> {
-        let isAutenticated = await this.storage.get('is-autenticated');
+        let isAutenticated = await this.storage.get(AUTENTICATION_KEY);
         if (!isAutenticated) {
             this.router.navigateByUrl('menu/login');
         }
