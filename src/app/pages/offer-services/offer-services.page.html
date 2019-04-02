@@ -20,22 +20,30 @@
                 <ion-select placeholder="Servicios" [(ngModel)]="servicio.type">
                     <ion-select-option *ngFor="let sType of servicioTypes" [value]="sType.name">{{ sType.name }}</ion-select-option>
                 </ion-select>
-            </ion-item>
+            </ion-item>     
+            <ion-item>
+                <ion-label>Nombre:</ion-label>                
+                <ion-input [(ngModel)]="servicio.name" type="text"></ion-input>
+            </ion-item>  
+            <ion-item>
+                <ion-label position="stacked">Descripción</ion-label>
+                <ion-input [(ngModel)]="servicio.product_description" type="text"></ion-input>
+            </ion-item>                 
+            <ion-item>
+                <ion-label position="stacked">Precio</ion-label>
+                <ion-input [(ngModel)]="servicio.price" type="number"></ion-input>
+            </ion-item>                        
             <ion-item>
                 <ion-label>Servicio a Domicilio:</ion-label>
                 <ion-toggle color="primary" [(ngModel)]="servicio.home_delivery"></ion-toggle>
             </ion-item>
             <ion-item>
+                <ion-label>Oficinas particulares:</ion-label>
+                <ion-toggle color="primary" [(ngModel)]="servicio.has_physical_offices"></ion-toggle>
+            </ion-item>
+            <ion-item *ngIf="servicio.has_physical_offices">
                 <ion-label position="stacked">Dirección</ion-label>
                 <ion-input [(ngModel)]="servicio.address" type="string"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Precio</ion-label>
-                <ion-input [(ngModel)]="servicio.price" type="number"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Descripción</ion-label>
-                <ion-input [(ngModel)]="servicio.product_description" type="text"></ion-input>
             </ion-item>
             <ion-row no-padding>
                 <ion-col size="6">
