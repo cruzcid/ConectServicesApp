@@ -1,42 +1,26 @@
 import { ToastController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
-
+import { Servicio } from '../beans/servicio'
 
 const SERVICES_KEY = 'servicios';
 
-export interface Empresa {
-    phisical_location: string,
-    virtual_location: string,
-    email: string,
-    fiscal_reference: string
-}
 
-export interface Servicio {
-    type: string,
-    address: string,
-    home_delivery: boolean,
-    price: number,
-    product_description: string,
-    created_at: number,
-    enterpriseId: number,
-    availability: number
-}
 @Injectable({
     providedIn: 'root'
 })
 export class ServiciosService {
     constructor(private storage: Storage, private toastCtrl: ToastController) { }
 
-    async agregarServicio(transaction: Servicio) {
-        return await this.obtenerServicios().then(servicios => {
+    async updateServicio(transaction: Servicio) {
+        return await this.obtainServicios().then(servicios => {
             servicios.push(transaction);
             console.log('Saving: ', servicios);
             return this.storage.set(SERVICES_KEY, servicios);
         });
     }
     // Obtener servicio por id. Checarlo con 
-    async obtenerServicio(): Promise<Servicio[]> {
+    async obtainServicio(): Promise<Servicio[]> {
         return await this.storage.get(SERVICES_KEY).then(res => {
             if (res) {
                 return res.sort((trans: Servicio, trans2: Servicio) => {
@@ -47,7 +31,7 @@ export class ServiciosService {
             }
         });
     }
-    async obtenerServicios(): Promise<Servicio[]> {
+    async obtainServicios(): Promise<Servicio[]> {
         return await this.storage.get(SERVICES_KEY).then(res => {
             if (res) {
                 return res.sort((trans: Servicio, trans2: Servicio) => {
@@ -59,21 +43,11 @@ export class ServiciosService {
         });
     }
 
-    async actualizarServicios(servicios) {
+    async updateServicios(servicios:Servicio[]) {
         return await this.storage.set(SERVICES_KEY, servicios);
     }
 
-    /*updateCurrency(selected) {
-        this.storage.set(SELECTED_CURRENCY_KEY, selected).then(() => {
-            let toast = this.toastCtrl.create({
-                message: 'Currency updated',
-                duration: 2000
-            });
-            toast.then(toast => toast.present());
-        })
-    }*/
-
-    eliminarServicios() {
+    deleteServicios() {
         this.storage.remove(SERVICES_KEY);
         let toast = this.toastCtrl.create({
             message: 'Servicios eliminados cleared!',
@@ -82,7 +56,7 @@ export class ServiciosService {
         toast.then(toast => toast.present());
     }
 
-    eliminarServicio() {
+    deleteServicio() {
         this.storage.remove(SERVICES_KEY);
         let toast = this.toastCtrl.create({
             message: 'Servicios eliminados cleared!',

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Servicio, ServiciosService } from '../../services/servicios.service';
+import { ServiciosService } from '../../services/servicios.service';
+import { Servicio } from '../../beans/servicio';
 import { ModalController, ToastController } from '@ionic/angular';
 import { ConfirmServicioModalPage } from '../confirm-servicio-modal/confirm-servicio-modal.page';
 @Component({
@@ -9,12 +10,13 @@ import { ConfirmServicioModalPage } from '../confirm-servicio-modal/confirm-serv
 })
 export class OfferServicesPage implements OnInit {
     private servicioTypes = [
-        { name: 'Food', icon: 'pizza' },
+        { name: 'Comida', icon: 'pizza' },
         { name: 'Rent', icon: 'business' },
         { name: 'eComerce', icon: 'cart' },
-        { name: 'Sports', icon: 'fitness' },
-        { name: 'Education', icon: 'school' },
-        { name: 'Travel', icon: 'airplane' }
+        { name: 'Deportes', icon: 'fitness' },
+        { name: 'Educación', icon: 'school' },
+        { name: 'Viajes', icon: 'airplane' },
+        { name: 'Construccion', icon: 'construct' }
     ];
 
     private created_at = new Date().toISOString();
@@ -22,8 +24,11 @@ export class OfferServicesPage implements OnInit {
     private servicio: Servicio;
     private servicioDefault: Servicio = {
         type: this.servicioTypes[0].name,
+        icon: this.servicioTypes[0].icon,
+        name: '',
         address: '',
         home_delivery: false,
+        has_physical_offices: false,
         price: 0,
         product_description: '',
         created_at: Date.now(),
@@ -46,7 +51,8 @@ export class OfferServicesPage implements OnInit {
     }
     public async onAddServicio() {
         if(this.verifyInformation()){
-
+            let serviceType = this.servicioTypes.find(obj => obj.name == this.servicio.type);
+            this.servicio.icon = serviceType.icon;
         }
         let modal = await this.modalCtrl.create({
             component: ConfirmServicioModalPage,
@@ -55,9 +61,9 @@ export class OfferServicesPage implements OnInit {
         modal.present();
         modal.onDidDismiss().then(res => {
             if (res && res.data.reload) {
-                this.servicios.agregarServicio(this.servicio).then(() => {
+                this.servicios.updateServicio(this.servicio).then(() => {
                     let toast = this.toastCtrl.create({
-                        message: 'Servicio guardado',
+                        message: 'Servicio agregado correctamente',
                         duration: 2000
                     });
                     toast.then(toast => toast.present());                   
@@ -74,14 +80,14 @@ export class OfferServicesPage implements OnInit {
         });
     }
 
-    public loadTransactions() {
-
-    }
     public setDefaultInformation() {
         this.servicio = {
             type: this.servicioDefault.type,
+            icon: this.servicioDefault.icon,
+            name: this.servicioDefault.name,
             address: this.servicioDefault.address,
             home_delivery: this.servicioDefault.home_delivery,
+            has_physical_offices: this.servicioDefault.has_physical_offices,
             price: this.servicioDefault.price,
             product_description: this.servicioDefault.product_description,
             created_at: Date.now(),
