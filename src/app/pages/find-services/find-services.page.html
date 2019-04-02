@@ -8,5 +8,31 @@
 </ion-header>
 
 <ion-content padding>
-
+    <ion-searchbar 
+    [(ngModel)]="searchTerm" (ionChange)="onSearchInput()"></ion-searchbar>
+    <div *ngIf="searching" class="spinner-container">
+        <ion-spinner></ion-spinner>
+    </div>
+    <ion-list #slidingList>
+        <ion-item-sliding *ngFor="let servicio of servicios; let i = index">
+            <ion-item>
+                <ion-icon [name]="servicio.icon" slot="start" class="category-icon"></ion-icon>
+                <ion-label>
+                    <h2>{{ servicio.name }}</h2>
+                    <p>
+                        {{ servicio.created_at | date:'MMM dd' }}
+                    </p> 
+                    <ion-badge color="secondary" *ngIf="servicio.home_delivery">A domicilio</ion-badge>                  
+                </ion-label>                                           
+                <ion-text slot="end" [color]="servicio.type ? 'success' : 'danger' ">
+                    <h3>$ {{ servicio.price }}</h3>
+                </ion-text>
+            </ion-item>    
+            <ion-item-options side="end">
+                <ion-item-option (click)="removeTransaction(i)" color="danger">
+                    <ion-icon name="trash" slot="icon-only"></ion-icon>
+                </ion-item-option>
+            </ion-item-options>
+        </ion-item-sliding>
+    </ion-list>
 </ion-content>
