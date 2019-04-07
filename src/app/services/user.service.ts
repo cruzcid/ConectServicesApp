@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../beans/user';
 import { Storage } from '@ionic/storage';
+import { EMPRESAS } from '../mock/mockdata';
 
 const USERS_KEY = 'users';
 
@@ -13,13 +14,13 @@ export class UserService {
         private storage: Storage
     ) { }
 
-    public async getUser(username: string):Promise<User>{
-        let noUser:User = {username:"", password:""};      
-        return this.storage.get(USERS_KEY).then( res => { 
+    public async getUser(user_email: string):Promise<User>{
+        let noUser:User = {username:"", password:"", empresa:EMPRESAS[0], email:""};      
+        return await this.storage.get(USERS_KEY).then( res => { 
             if(res){                
                 for( let i in res ){
-                    if(res[i].username == username){
-                        console.log("user Loged in");
+                    if(res[i].email == user_email){
+                        console.log("user found in users");
                         return res[i];                        
                     }
                 }
@@ -33,5 +34,29 @@ export class UserService {
     }
     public async setUsers(users:User[]){
         return await this.storage.set(USERS_KEY, users);
+    }
+    public async getUsers():Promise<User[]>{
+        return await this.storage.get(USERS_KEY)
+        .then((res) =>{
+            console.log(res);
+            return res;
+        }).catch( res => {
+            console.log("An error ocurred while getting the users");
+            console.log(res);
+            return res;
+        });
+    }
+    public async addUser(user:User){
+        return await this.getUsers()
+            .then((res) => {
+                console.log("UserService.addUser result");
+                console.log(res);
+                let allUsers:User[] = [];
+                allUsers = res;
+                allUsers.push(user);
+
+                this.setUsers(allUsers);                
+            }
+        );
     }
 }
