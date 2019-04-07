@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonSlides, ToastController } from '@ionic/angular';
+import { IonSlides, ToastController, PopoverController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/beans/user';
 import { EMPRESAS } from 'src/app/mock/mockdata';
+import { CsvPopoverPage } from '../csv-popover/csv-popover.page';
 
 @Component({
     selector: 'app-register',
@@ -59,7 +60,9 @@ export class RegisterPage implements OnInit {
    
     constructor(
         private userService:UserService,
-        private toastCtrl: ToastController) { 
+        private toastCtrl: ToastController,
+        private popOverController:PopoverController
+        ) { 
 
     }
     ionViewWillEnter() {
@@ -160,6 +163,16 @@ export class RegisterPage implements OnInit {
     }    
     private confirmPasswords(value){
 
+    }
+    private async openCVVExplanation(event:Event){
+        const popOver = await this.popOverController.create({
+            component:CsvPopoverPage,
+            componentProps:{ 
+                custom_title: "Ubicación de CVV"
+            }, 
+            event:event
+        });
+        popOver.present();
     }
 
 }

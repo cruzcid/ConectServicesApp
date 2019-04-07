@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { IonicStorageModule } from '@ionic/storage';
 import { ConfirmServicioModalPageModule } from './pages/confirm-servicio-modal/confirm-servicio-modal.module';
+import { CsvPopoverPageModule } from './pages/csv-popover/csv-popover.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -19,7 +20,9 @@ import { ConfirmServicioModalPageModule } from './pages/confirm-servicio-modal/c
         IonicModule.forRoot(),
         AppRoutingModule,
         IonicStorageModule.forRoot(),
-        ConfirmServicioModalPageModule],
+        ConfirmServicioModalPageModule,
+        CsvPopoverPageModule        
+    ],
     providers: [
         StatusBar,
         SplashScreen,
