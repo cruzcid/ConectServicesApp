@@ -12,7 +12,7 @@ const AUTENTICATION_KEY:string = 'is-autenticated';
 })
 export class LoginPage implements OnInit {
 
-    private username: string;
+    private user_email: string;
     private password: string;
     constructor(
         private router: Router,
@@ -24,14 +24,13 @@ export class LoginPage implements OnInit {
     }
 
     public attemptLoggin(mForm) {
-        console.log("Sadhguru ");
         console.log(mForm.form.value);
         let value = mForm.form.value;
-        this.userService.getUser(value.username)
+        this.userService.getUser(value.user_email)
             .then((user) => {
                 console.log("userResponse positive");
                 console.log(user);
-                if(value.username === user.username && value.password === user.password){ 
+                if(value.user_email === user.email && value.password === user.password){ 
                     this.storage.set(AUTENTICATION_KEY, true);
                     this.router.navigateByUrl('/menu/my-profile')
                 }
