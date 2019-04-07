@@ -12,82 +12,132 @@
         <h2>Crea tu cuenta!</h2>
     </div>
     <div class="swiper-button-prev" *ngIf="previousSlideEnabled" (click)="prevSlide()"></div>
-    <div class="swiper-button-next" *ngIf="nextSlideEnabled"></div>
     <ion-slides pager="true" #slides>
         <!-- First Slide -->
         <ion-slide>
             <ion-content>
-                    <form #form="ngForm" (ngSubmit)="registerForm(form)">
-                            <div padding>
-                                <ion-item>
-                                    <ion-label><b>Datos de tu Empresa</b> </ion-label>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Razón Social</ion-label>
-                                    <ion-input name="razon_social" type="text" placeholder="Mexiquence SA DE CV" ngModel required>
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Estado</ion-label>
-                                    <ion-input name="estado" type="text" placeholder="CDMX" ngModel required>
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Municipio,</ion-label>
-                                    <ion-input name="municipio" type="text" placeholder="Iztapalapa" ngModel required>
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Colonia</ion-label>
-                                    <ion-input name="colonia" type="text" placeholder="Colonial Iztapalapa" ngModel required>
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Calle</ion-label>
-                                    <ion-input name="calle" type="text" placeholder="Iztapalapa" ngModel required>
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Número</ion-label>
-                                    <ion-input name="numero" type="number" placeholder="314" ngModel required>
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Teléfono</ion-label>
-                                    <ion-input name="telefono" type=“tel” maxlength=“10” placeholder="5517584632" ngModel required>
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Giro</ion-label>
-                                    <ion-input name="giro" type="text" placeholder="Centro de copiado" ngModel required>
-                                    </ion-input>
-                                </ion-item>
-                                <ion-item>
-                                    <ion-label>Código Postal</ion-label>
-                                    <ion-input name="codigo_postal" type="tel" maxlength=“4” placeholder="8970" ngModel required>
-                                    </ion-input>
-                                </ion-item>
-            
-                                <ion-list name="rango_de_empleados" ngModel required>
-            
-                                </ion-list>
-                            </div>
-                            <div padding>
-                                <ion-button size="large" type="submit" expand="block">
-                                    {{button_label}}
-                                </ion-button>
-                            </div>
-            
-                        </form>
-            </ion-content>                        
+                <form #formOne="ngForm" (ngSubmit)="registerForm(formOne)">
+                    <div padding>
+                        <ion-item>
+                            <ion-label><b>Datos de tu Empresa</b> </ion-label>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Razón Social:</ion-label>
+                            <ion-input name="razon_social" type="text" placeholder="Mexiquence SA DE CV" ngModel
+                                required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="stacked">Estado:</ion-label>
+                            <ion-select name="estado" placeholder="Monterrey" ngModel required
+                                [(ngModel)]="formatoUno.estado">
+                                <ion-select-option *ngFor="let estado of estadosMexico" [value]="estado">
+                                    {{ estado }}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label *ngIf="formatoUno.estado != 'CDMX'">Municipio:</ion-label>
+                            <ion-label *ngIf="formatoUno.estado == 'CDMX'">Alcaldía:</ion-label>
+                            <ion-input name="municipio" type="text" placeholder="Iztapalapa" ngModel required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item *ngIf="formatoUno.estado=='CDMX'">
+                            <ion-label>Colonia:</ion-label>
+                            <ion-input name="colonia" type="text" placeholder="Colonial Iztapalapa" ngModel required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Calle:</ion-label>
+                            <ion-input name="calle" type="text" placeholder="Iztapalapa" ngModel required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Número:</ion-label>
+                            <ion-input name="numero" type="tel" maxlength="10" placeholder="314" ngModel required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Teléfono:</ion-label>
+                            <ion-input name="telefono" type="tel" maxlength="10" placeholder="5517584632" ngModel
+                                required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Giro:</ion-label>
+                            <ion-input name="giro" type="text" placeholder="Centro de copiado" ngModel required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Código Postal:</ion-label>
+                            <ion-input name="codigo_postal" type="tel" maxlength="5" placeholder="05340" ngModel
+                                required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="stacked">Rango de empleados:</ion-label>
+                            <ion-select name="rango_de_empleados" placeholder="0-10" ngModel required>
+                                <ion-select-option *ngFor="let rangoEmpleados of rangosEmpleadosEmpresa">
+                                    {{ rangoEmpleados.numberOfWorkers }}</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                    </div>
+                    <div padding>
+                        <ion-button size="large" type="submit" expand="block" type="submit">
+                            Continuar
+                        </ion-button>
+                    </div>
+
+                </form>
+            </ion-content>
         </ion-slide>
         <!-- Second Slide -->
         <ion-slide>
-            <form #form="ngForm" (ngSubmit)="registerForm(form)">
+            <form #formTwo="ngForm" (ngSubmit)="registerForm(formTwo)">
                 <ion-grid>
                     <div padding>
                         <ion-item>
-                            <ion-label>2nd slide Nombre: </ion-label>
+                            <ion-label><b>Datos de Pago</b></ion-label>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Tarjeta de credito: </ion-label>
+                            <ion-input name="numero_tarjeta" type="text" placeholder="5252383800002134" maxlength="16"
+                                ngModel required>
+                            </ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Fecha de vencimiento: </ion-label>
+                            <ion-datetime name="expiracion_tarjeta" display-format="MM/YY" picker-format="MM YY"
+                                min="2019" max="2030" ngModel required></ion-datetime>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>CVV: </ion-label>
+                            <ion-icon name="help" (click)="openCVVExplanation()"></ion-icon>
+                            <ion-input name="cvv_credit_card" type="number" placeholder="Password" ngModel required>
+                            </ion-input>
+                        </ion-item>
+                    </div>
+                    <div padding>
+                        <ion-button *ngIf="formTwo.invalid" size="large" (click)="omitStepTwo()" expand="block">
+                            Omitir y Continuar
+                        </ion-button>
+                        <ion-button *ngIf="formTwo.valid" size="large" type="submit" expand="block"
+                            [disabled]="formTwo.invalid">
+                            Continuar
+                        </ion-button>
+                    </div>
+                </ion-grid>
+            </form>
+        </ion-slide>
+        <!-- Third Slide -->
+        <ion-slide>
+            <form #formThree="ngForm" (ngSubmit)="registerForm(formThree)">
+                <ion-grid>
+                    <div padding>
+                        <ion-item>
+                            <ion-label><b>Datos de Cuenta</b></ion-label>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Nombre de usuario: </ion-label>
                             <ion-input name="name" type="text" placeholder="Juan Rodriguez" ngModel required>
                             </ion-input>
                         </ion-item>
@@ -104,23 +154,17 @@
                         </ion-item>
                         <ion-item>
                             <ion-label>Repetir Contraseña: </ion-label>
-                            <ion-input name="confirm" type="password" placeholder="Password" ngModel required>
+                            <ion-input name="password_confirm" type="password" placeholder="Password" ngModel required>
                             </ion-input>
                         </ion-item>
                     </div>
                     <div padding>
-                        <ion-button size="large" type="submit" expand="block">
-                            {{button_label}}
+                        <ion-button size="large" type="submit" expand="block" [disabled]="formThree.invalid">
+                            Finalizar Registro
                         </ion-button>
                     </div>
                 </ion-grid>
             </form>
-        </ion-slide>
-        <!-- Third Slide -->
-        <ion-slide>
-            <h1>Busca y encuentra</h1>
-            <h5>Show many images here of services and pymes</h5>
-            <ion-button expand="button" color="light" (click)="secondStep()">Continuar</ion-button>
         </ion-slide>
     </ion-slides>
     <ion-row justify-content-center>
