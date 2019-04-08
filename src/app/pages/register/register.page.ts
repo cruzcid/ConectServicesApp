@@ -4,6 +4,11 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/beans/user';
 import { EMPRESAS } from 'src/app/mock/mockdata';
 import { CsvPopoverPage } from '../csv-popover/csv-popover.page';
+import { Router } from '@angular/router';
+import { Storage } from '@ionic/storage';
+
+
+const AUTENTICATION_KEY:string = 'is-autenticated';
 
 @Component({
     selector: 'app-register',
@@ -62,7 +67,9 @@ export class RegisterPage implements OnInit {
     constructor(
         private userService:UserService,
         private toastCtrl: ToastController,
-        private popOverController:PopoverController
+        private popOverController:PopoverController,
+        private router: Router,
+        private storage: Storage
         ) { 
 
     }
@@ -131,38 +138,42 @@ export class RegisterPage implements OnInit {
                     // username available
                     userCouldBeAdded = true;                          
                 }else {                   
-                    // launch toast with error. 
-                    let toast = this.toastCtrl.create({
-                        message: 'El correo ya existe. Intenta con otro correo',
-                        duration: 5000
-                    });
-        
-                    toast.then(toast => toast.present());   
+                    // launch toast with error.                  
+                    this.launchToast('El correo ya existe. Intenta con otro correo',5000);
                 }
             })
             .catch((user) => {
                 console.log("userResponse negative");
                 console.log(user);
-                let toast = this.toastCtrl.create({
-                    message: 'Ocurrio un error. Intenta de nuevo más tarde.',
-                    duration: 5000
-                });
-    
-                toast.then(toast => toast.present());      
+                this.launchToast('Ocurrio un error. Intenta de nuevo más tarde.', 5000);     
             });
 
             // Add user 
             if(userCouldBeAdded){
-                let userNovo:User = { email:'', empresa:EMPRESAS[0], password:'', username:''};
+                let userNovo:User = { email:'', empresa:EMPRESAS[1], password:'', username:''};                
+                if(this.isAnEnterpriseRegistering){
+                    userNovo.empresa = EMPRESAS[0];                
+                }
                 userNovo.email = formValue.email;
-                userNovo.empresa = EMPRESAS[0];
                 userNovo.password = formValue.password;
                 userNovo.username = formValue.name;
-                await this.userService.addUser(userNovo);
+                await this.userService.addUser(userNovo)
+                    .then((res)=>{
+                        console.log("user added Succesfully");
+                        if(res && res.setUsersSuccess){
+                            console.log("We should be routing you to the My profile page. COOooooool :D");
+                            this.storage.set(AUTENTICATION_KEY, true);                   
+                            this.router.navigateByUrl('/menu/my-profile');
+                        }                       
+                    })
+                    .catch((err)=>{
+                        console.log("user cannot be added");
+                    });
             }
         } else {
             // launch toast with password should be equal
             console.log("password");
+            this.launchToast('Las contraseñas deben ser iguales',5000);
         }
     }    
     private confirmPasswords(value){
@@ -178,5 +189,12 @@ export class RegisterPage implements OnInit {
         });
         popOver.present();
     }
+    private launchToast(message:string, duration:number){
+        let toast = this.toastCtrl.create({
+            message: message,
+            duration: duration
+        });
 
+        toast.then(toast => toast.present()); 
+    }
 }
