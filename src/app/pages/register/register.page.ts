@@ -17,6 +17,7 @@ export class RegisterPage implements OnInit {
     private nextSlideEnabled: boolean = false;
     private previousSlideEnabled: boolean = false;
     private activeIndex:number;
+    private isAnEnterpriseRegistering:boolean = false;
     private formatoUno = {estado:""};
     private rangosEmpleadosEmpresa = [
         { name: 'Microempresa', numberOfWorkers: '1-10' },
@@ -57,7 +58,7 @@ export class RegisterPage implements OnInit {
         "Yucatán",
         "Zacatecas",
     ];
-   
+
     constructor(
         private userService:UserService,
         private toastCtrl: ToastController,
@@ -71,6 +72,9 @@ export class RegisterPage implements OnInit {
         this.slides.lockSwipeToNext(true);
     }
     ngOnInit() {
+    }
+    private omitStepOne(){
+        this.nextSlide();
     }
     private omitStepTwo(){
         this.nextSlide();
