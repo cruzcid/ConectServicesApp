@@ -9,6 +9,7 @@ import { Storage } from '@ionic/storage';
 
 
 const AUTENTICATION_KEY:string = 'is-autenticated';
+const AUTENTICATED_USER:string = 'auth-user';
 
 @Component({
     selector: 'app-register',
@@ -162,7 +163,8 @@ export class RegisterPage implements OnInit {
                         console.log("user added Succesfully");
                         if(res && res.setUsersSuccess){
                             console.log("We should be routing you to the My profile page. COOooooool :D");
-                            this.storage.set(AUTENTICATION_KEY, true);                   
+                            this.storage.set(AUTENTICATION_KEY, true);    
+                            this.storage.set(AUTENTICATED_USER, userNovo);               
                             this.router.navigateByUrl('/menu/my-profile');
                         }                       
                     })

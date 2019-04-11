@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, CanActivate, Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
 
-const AUTENTICATION_KEY:string = 'is-autenticated'
+const AUTENTICATION_KEY:string = 'is-autenticated';
 
 @Injectable({
     providedIn: 'root'

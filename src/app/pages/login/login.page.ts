@@ -4,7 +4,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Storage } from '@ionic/storage';
 
 const AUTENTICATION_KEY:string = 'is-autenticated';
-
+const AUTENTICATED_USER:string = 'auth-user';
 @Component({
     selector: 'app-login',
     templateUrl: './login.page.html',
@@ -32,6 +32,7 @@ export class LoginPage implements OnInit {
                 console.log(user);
                 if(value.user_email === user.email && value.password === user.password){ 
                     this.storage.set(AUTENTICATION_KEY, true);
+                    this.storage.set(AUTENTICATED_USER, user);
                     this.router.navigateByUrl('/menu/my-profile')
                 }
             })
