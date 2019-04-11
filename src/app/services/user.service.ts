@@ -33,7 +33,14 @@ export class UserService {
         });
     }
     public async setUsers(users:User[]){
-        return await this.storage.set(USERS_KEY, users);
+        return await this.storage.set(USERS_KEY, users)
+            .then( (res)=>{
+                console.log("setUsers Added successfully");
+                return { setUsersSuccess:true};
+            }).catch((err) =>{
+                console.log("setUsers cannot be Added successfully");
+                return { setUsersSuccess:false};
+            });
     }
     public async getUsers():Promise<User[]>{
         return await this.storage.get(USERS_KEY)
@@ -46,7 +53,7 @@ export class UserService {
             return res;
         });
     }
-    public async addUser(user:User){
+    public async addUser(user:User):Promise<any>{
         return await this.getUsers()
             .then((res) => {
                 console.log("UserService.addUser result");
@@ -55,7 +62,13 @@ export class UserService {
                 allUsers = res;
                 allUsers.push(user);
 
-                this.setUsers(allUsers);                
+                return this.setUsers(allUsers)
+                .then((res)=>{
+                    return res;
+                })
+                .catch((res)=>{
+                    return res;
+                });                
             }
         );
     }

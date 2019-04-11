@@ -15,6 +15,19 @@ export const EMPRESAS: Empresa[] = [
         colonia:'AZCAPOTZALCO',
         codigo_postal:'6430',
         rango_de_empleados:''
+    },
+    {   // Empty enterprise
+        email: '',
+        razon_social:'',
+        estado:'',
+        municipio:'',
+        calle:'',
+        numero:'',
+        telefono:'',
+        giro: '',
+        colonia:'',
+        codigo_postal:'',
+        rango_de_empleados:''
     }
 ];
 export const USERS: User[] = [

@@ -15,8 +15,12 @@
     <ion-slides pager="true" #slides>
         <!-- First Slide -->
         <ion-slide>
+            <ion-item>
+                <ion-label>Registro para empresa</ion-label>
+                <ion-checkbox slot="end" [(ngModel)]="isAnEnterpriseRegistering"></ion-checkbox>
+            </ion-item>
             <ion-content>
-                <form #formOne="ngForm" (ngSubmit)="registerForm(formOne)">
+                <form *ngIf="isAnEnterpriseRegistering" #formOne="ngForm" (ngSubmit)="registerForm(formOne)">
                     <div padding>
                         <ion-item>
                             <ion-label><b>Datos de tu Empresa</b> </ion-label>
@@ -82,12 +86,17 @@
                         </ion-item>
                     </div>
                     <div padding>
-                        <ion-button size="large" type="submit" expand="block" type="submit">
+                        <ion-button *ngIf="isAnEnterpriseRegistering" size="large" type="submit" expand="block">
                             Continuar
-                        </ion-button>
+                        </ion-button>                        
                     </div>
-
                 </form>
+                <div padding>                        
+                    <ion-button *ngIf="!isAnEnterpriseRegistering" size="large" expand="block"
+                        (click)="omitStepOne()">
+                        Continuar
+                    </ion-button>
+                </div>
             </ion-content>
         </ion-slide>
         <!-- Second Slide -->

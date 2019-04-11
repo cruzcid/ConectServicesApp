@@ -8,5 +8,67 @@
 </ion-header>
 
 <ion-content padding>
-
+    <!-- Personal Data-->
+    <ion-card *ngIf="user">
+        <ion-card-header>
+            <ion-card-title><b>Datos Personales</b></ion-card-title>
+            <ion-item>
+                <ion-img [src]="profileImage"></ion-img>
+            </ion-item>
+            <ion-card-title>{{user.username}}</ion-card-title>
+            <ion-card-subtitle>{{user.email}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-buttons slot="end">
+                    <ion-button>
+                        Editar
+                        <ion-icon slot="end" name="create"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+    <!-- Enterprise data -->
+    <ion-card *ngIf="enterprise">
+        <ion-card-header>
+            <ion-card-title><b>Datos de empresa</b></ion-card-title>
+            <ion-card-subtitle>{{enterprise.razon_social}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-label><b>Estado: </b>{{enterprise.estado}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label><b>Municipio: </b>{{enterprise.municipio}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label><b>Calle: </b>{{enterprise.calle}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label><b>Número: </b>{{enterprise.numero}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label><b>Teléfono: </b>{{enterprise.telefono}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label><b>Giro: </b>{{enterprise.giro}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label><b>Colonia: </b>{{enterprise.colonia}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label><b>C.P.: </b>{{enterprise.codigo_postal}}</ion-label>
+            </ion-item>            
+            <ion-item>
+                <ion-buttons slot="end">
+                    <ion-button>
+                        Editar
+                        <ion-icon slot="end" name="create"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-item>
+        </ion-card-content>
+    </ion-card>
+    
 </ion-content>
